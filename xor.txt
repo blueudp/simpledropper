@@ -1,0 +1,17 @@
+def encode_file(input_file, output_file, key):
+	with open(input_file, 'rb') as infile, open(output_file, 'wb') as outfile:
+		key_index = 0
+		while True:
+			byte = infile.read(1)
+			if not byte:
+				break
+			xor_byte = bytes([byte[0] ^ key[key_index]])
+			outfile.write(xor_byte)
+			key_index = (key_index + 1) % len(key)
+			
+input_file = "beacon_x64.bin"
+output_file = "shellcode_xor.bin"
+key = b'\x08\x4B'
+
+encode_file(input_file, output_file, key)
+print("hecho!")
